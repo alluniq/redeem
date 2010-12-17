@@ -1,6 +1,6 @@
 module Redeem
   
-  require '~/Praca/redeem/lib/redeem/railtie.rb' if defined?(Rails)
+  require File.dirname(__FILE__)+'/redeem/railtie.rb' if defined?(Rails)
   
   def self.included(base)
     base.extend(ClassMethods)
@@ -17,11 +17,11 @@ module Redeem
   module InstanceMethods
     
     def redeem!
-      
+      puts "OK"
     end
     
     def can_be_redeemed?
-      
+      puts "Yes"
     end
     
   end  
