@@ -1,4 +1,7 @@
 module Redeem
+  
+  require '~/Praca/redeem/lib/redeem/railtie.rb' if defined?(Rails)
+  
   def self.included(base)
     base.extend(ClassMethods)
   end
