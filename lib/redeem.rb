@@ -14,7 +14,7 @@ module Redeem
         cattr_accessor :valid_for
         cattr_accessor :code_length
         cattr_accessor :uses
-        before_create :setup_new
+        before_create :initialize_new
         self.valid_for = options[:valid_for] unless options[:valid_for].nil?
         self.uses = options[:uses] unless options[:uses].nil?
         self.code_length = (options[:code_length].nil? ? 6 : options[:code_length])
@@ -49,18 +49,18 @@ module Redeem
   end
   
   module InstanceMethods
-  
+    
     def redeemed?
-      self.issued_at
+      self.issued_at != nil
     end
 
-    # Returns whether or not the redeemable has expired
     def expired?
-      self.expires_at? and self.expires_on < Time.now
+      self.expires_at < Time.now
     end
     
     def redeem!
       if self.can_be_redeemed?
+        self.issued_at = Time.now
         self.uses -= 1
         true
       else
@@ -69,8 +69,17 @@ module Redeem
     end
     
     def can_be_redeemed?
-      self.uses > 0
+      self.uses > 0 && Time.now < self.expires_at
     end
     
+    def initialize_new
+      self.code = self.class.generate_unique_code if self.code == nil
+      unless self.class.valid_for.nil?
+        self.expires_at = Time.now + self.class.valid_for
+      end
+      unless self.class.valid_for.nil?
+        self.uses = self.class.uses
+      end
+    end
   end  
 end
