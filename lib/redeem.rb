@@ -10,7 +10,7 @@ module Redeem
   module ClassMethods
     
     def redeemable(options = {})
-      unless redeemable? # don't let AR call this twice
+      unless redeemable?
         cattr_accessor :valid_for
         cattr_accessor :code_length
         cattr_accessor :uses
@@ -21,15 +21,12 @@ module Redeem
       end
       include InstanceMethods
       
-      # Generates an alphanumeric code using an MD5 hash
-      # * +code_length+ - number of characters to return
       def generate_code(code_length=6)
         chars = ("a".."z").to_a + ("1".."9").to_a 
         new_code = Array.new(code_length, '').collect{chars[rand(chars.size)]}.join
         Digest::MD5.hexdigest(new_code)[0..(code_length-1)].upcase
       end
 
-      # Generates unique code based on +generate_code+ method
       def generate_unique_code
         begin
           new_code = generate_code(self.code_length)
@@ -37,7 +34,6 @@ module Redeem
         new_code
       end
       
-      # Checks the database to ensure the specified code is not taken
       def active_code?(code)
         find :first, :conditions => {:code => code}
       end
@@ -77,9 +73,11 @@ module Redeem
       unless self.class.valid_for.nil?
         self.expires_at = Time.now + self.class.valid_for
       end
-      unless self.class.valid_for.nil?
+      unless self.class.uses.nil?
         self.uses = self.class.uses
       end
     end
+    
+    def after_redeem() end
   end  
 end
