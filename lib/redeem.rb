@@ -58,6 +58,7 @@ module Redeem
       if self.can_be_redeemed?
         self.issued_at = Time.now
         self.uses -= 1
+        self.save
         true
       else
         false
