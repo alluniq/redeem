@@ -1,7 +1,6 @@
 module Redeem
   
   require File.dirname(__FILE__)+'/redeem/railtie.rb' if defined?(Rails) && Rails::VERSION::MAJOR == 3
-  #require File.dirname(__FILE__)+'/redeem/engine' if defined?(Rails) && Rails::VERSION::MAJOR == 3
   
   def self.included(base)
     base.extend(ClassMethods)
