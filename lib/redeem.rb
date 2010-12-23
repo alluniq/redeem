@@ -7,6 +7,8 @@ module Redeem
     base.extend(ClassMethods)
   end
   
+  DEFAULT_LENGTH = 6
+  
   module ClassMethods
     
     def redeemable(options = {})
@@ -17,11 +19,11 @@ module Redeem
         before_create :initialize_new
         self.valid_for = options[:valid_for] unless options[:valid_for].nil?
         self.uses_by_default = options[:uses_by_default] unless options[:uses_by_default].nil?
-        self.code_length = (options[:code_length].nil? ? 6 : options[:code_length])
+        self.code_length = (options[:code_length].nil? ? DEFAULT_LENGTH : options[:code_length])
       end
       include InstanceMethods
       
-      def generate_code(code_length=6)
+      def generate_code(code_length=DEFAULT_LENGTH)
         chars = ("a".."z").to_a + ("1".."9").to_a 
         new_code = Array.new(code_length, '').collect{chars[rand(chars.size)]}.join
         Digest::MD5.hexdigest(new_code)[0..(code_length-1)].upcase
@@ -35,7 +37,7 @@ module Redeem
       end
       
       def active_code?(code)
-        find :first, :conditions => {:code => code}
+        (find :first, :conditions => {:code => code}).nil? ? false : true
       end
     end
     
