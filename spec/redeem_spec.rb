@@ -21,6 +21,16 @@ describe Coupon do
       match.to_s.should == code 
     end
     
+    it "should generate an unique code" do
+      code = "code"
+      Coupon.should_receive(:generate_code).and_return(code)
+      Coupon.should_receive(:active_code?).with(code).and_return(true)
+      Coupon.should_receive(:generate_code).and_return(code)
+      Coupon.should_receive(:active_code?).with(code).and_return(false)
+      coupon = Coupon.create
+      coupon.code.should == "code"
+    end
+    
     it "should check if active code" do
       code = Coupon.create.code
       Coupon.active_code?(code).should == true
