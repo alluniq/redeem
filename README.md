@@ -1,15 +1,17 @@
-h2. Redeemable
+Redeemable
+==========
 
+Usage
+-----
 
-h3. Usage
-
-h4. Make your ActiveRecord model redeemable
+### Add redeem capability to your ActiveRecord model
 
 class Ticket < ActiveRecord::Base
   redeemable :valid_for => 30.days, :uses => 4, :code_length => 8
 end
 
-h4. Generate the model
+
+### Generate the model
 
 rails generate redeemable Ticket (with your attributes)
 
