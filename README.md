@@ -39,3 +39,14 @@ or you can declare it manually
     t = Ticket.create(:code => "123456")
     t.code
     > "123456"
+    
+Copyright
+---------
+
+Copyright © 2010 Grzegorz Kazulak, Adam Lipka. See LICENSE for details. 
+
+Credits
+-------
+
+Based on ActsAsRedeemable/Squeejee 
+
