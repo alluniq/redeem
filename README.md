@@ -6,11 +6,11 @@ Usage
 
 ### Add redeem capability to your ActiveRecord model
 
-class Ticket < ActiveRecord::Base
+    class Ticket < ActiveRecord::Base
 
-    redeemable :valid_for => 30.days, :uses => 4, :code_length => 8
+        redeemable :valid_for => 30.days, :uses => 4, :code_length => 8
 
-end
+    end
 
 **Make sure that the model has attributes:**
 
