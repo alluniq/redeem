@@ -10,7 +10,7 @@ Usage
 
     class Ticket < ActiveRecord::Base
 
-        redeemable :valid_for => 30.days, :uses => 4, :code_length => 8
+        redeemable :valid_for => 30.days, :uses_by_default => 4, :code_length => 8
 
     end
 
