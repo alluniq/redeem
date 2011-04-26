@@ -1,6 +1,6 @@
 require 'rails/generators'
 
-class RedeemableGenerator < Rails::Generators::Base #:nodoc:
+class RedeemGenerator < Rails::Generators::Base #:nodoc:
   include Rails::Generators::Migration
   
   argument :class_name, :type => :string, :default => "User"

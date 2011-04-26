@@ -1,4 +1,4 @@
-Redeemable
+Redeem
 ==========
 
 This gem provides redeem capability for ActiveRecord models. It can be used for coupons, tickets, etc.
@@ -19,7 +19,7 @@ code:string, uses:integer, issued_at:datetime, expires_at:datetime, created_at:d
 
 ### Generate the model
 
-    rails generate redeemable ClassName attributes
+    rails generate redeem ClassName attributes
 
 Generator automatically adds the following attributes to the model:
 
