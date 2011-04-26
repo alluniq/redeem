@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Coupon do
   describe "class methods" do
-    it "should assign class attribute uses_by_default" do
-      Coupon.uses_by_default.should == 1 
+    it "should assign class attribute default_number_of_uses" do
+      Coupon.default_number_of_uses.should == 1 
     end
     
     it "should assign class attribute valid_for" do
@@ -19,6 +19,16 @@ describe Coupon do
       code.length.should == 8
       match = code.match(/[0-9A-Z]*/)
       match.to_s.should == code 
+    end
+    
+    it "should generate an unique code" do
+      code = "code"
+      Coupon.should_receive(:generate_code).and_return(code)
+      Coupon.should_receive(:active_code?).with(code).and_return(true)
+      Coupon.should_receive(:generate_code).and_return(code)
+      Coupon.should_receive(:active_code?).with(code).and_return(false)
+      coupon = Coupon.create
+      coupon.code.should == "code"
     end
     
     it "should check if active code" do
@@ -39,9 +49,9 @@ describe Coupon do
       coupon.expires_at.should == time + Coupon.valid_for
     end
     
-    it "should assign uses with class uses_by_default" do
+    it "should assign uses with class default_number_of_uses" do
       coupon = Coupon.create
-      coupon.uses.should == Coupon.uses_by_default
+      coupon.uses.should == Coupon.default_number_of_uses
     end
   end
   

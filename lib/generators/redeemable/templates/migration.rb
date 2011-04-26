@@ -1,6 +1,6 @@
 class <%= "Create#{@class_name.pluralize}" %> < ActiveRecord::Migration
   def self.up
-    create_table :<%= @class_name.pluralize.downcase %> do |t|
+    create_table :<%= @file_name.pluralize %> do |t|
 
       t.column :code, :string
       t.column :uses, :integer
@@ -16,6 +16,6 @@ class <%= "Create#{@class_name.pluralize}" %> < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :<%= @class_name.pluralize.downcase %>
+    drop_table :<%= @file_name.pluralize %>
   end
 end
