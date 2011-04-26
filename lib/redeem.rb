@@ -14,10 +14,10 @@ module Redeem
       unless redeemable?
         cattr_accessor :valid_for
         cattr_accessor :code_length
-        cattr_accessor :uses_by_default
+        cattr_accessor :default_number_of_uses
         before_create :initialize_new
         self.valid_for = options[:valid_for] unless options[:valid_for].nil?
-        self.uses_by_default = options[:uses_by_default] unless options[:uses_by_default].nil?
+        self.default_number_of_uses = options[:default_number_of_uses] unless options[:default_number_of_uses].nil?
         self.code_length = (options[:code_length].nil? ? DEFAULT_LENGTH : options[:code_length])
       end
       include InstanceMethods
@@ -75,8 +75,8 @@ module Redeem
       unless self.class.valid_for.nil?
         self.expires_at = Time.now + self.class.valid_for
       end
-      unless self.class.uses_by_default.nil?
-        self.uses = self.class.uses_by_default
+      unless self.class.default_number_of_uses.nil?
+        self.uses = self.class.default_number_of_uses
       end
     end
     

@@ -13,6 +13,7 @@ class RedeemableGenerator < Rails::Generators::Base #:nodoc:
     super
     @attributes = runtime_args.values_at(1..runtime_args.length-1)
     @class_name = runtime_args[0] if runtime_args.length > 0
+    @file_name = file_name(@class_name)
   end
   
   def self.next_migration_number(dirname)
@@ -24,7 +25,12 @@ class RedeemableGenerator < Rails::Generators::Base #:nodoc:
   end
   
   def copy_files
-    template 'model_template.rb', "app/models/#{@class_name.downcase}.rb"
-    migration_template 'migration.rb', "db/migrate/create_#{@class_name.pluralize.downcase}.rb"
+    template 'model_template.rb', "app/models/#{@file_name}.rb"
+    migration_template 'migration.rb', "db/migrate/create_#{@file_name.pluralize}.rb"
+  end
+  
+  private
+  def file_name(class_name)
+    class_name.underscore if class_name
   end
 end
